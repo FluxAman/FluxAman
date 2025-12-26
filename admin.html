@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - FluxAman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 24px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .admin-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            color: var(--text-main);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Tabs */
+        .tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-muted);
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Messages Styles */
+        .message-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .message-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .message-card.unread {
+            border-left: 4px solid var(--accent);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .message-info h3 {
+            color: var(--text-main);
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+
+        .message-info p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--accent);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--accent);
+        }
+
+        .icon-btn.delete {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .icon-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .message-body {
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 16px;
+            background: rgba(10, 15, 31, 0.5);
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-align: center;
+        }
+
+        .stat-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            color: var(--accent);
+            margin: 0 0 8px 0;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Projects Styles */
+        .project-form {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 32px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 2px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .file-input-label:hover {
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.2);
+        }
+
+        .file-input-label i {
+            font-size: 32px;
+            color: var(--accent);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .project-admin-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-admin-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .project-admin-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .project-admin-content {
+            padding: 20px;
+        }
+
+        .project-admin-content h3 {
+            color: var(--text-main);
+            margin: 0 0 8px 0;
+            font-size: 20px;
+        }
+
+        .project-admin-content p {
+            color: var(--text-muted);
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .project-admin-url {
+            color: var(--accent);
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .project-admin-actions {
+            display: flex;
+            gap: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                <p style="color: var(--text-muted); margin: 8px 0 0 0;">Manage your portfolio content</p>
+            </div>
+            <div class="admin-actions">
+                <a href="index.html" class="btn ghost">
+                    <i class="fas fa-home"></i> Back to Site
+                </a>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div
+            style="display: flex; gap: 12px; margin-bottom: 32px; border-bottom: 2px solid rgba(56, 189, 248, 0.2); padding-bottom: 0;">
+            <button class="tab-btn active" onclick="switchTab('messages')" id="messages-tab">
+                <i class="fas fa-envelope"></i> Messages
+            </button>
+            <button class="tab-btn" onclick="switchTab('projects')" id="projects-tab">
+                <i class="fas fa-folder-open"></i> Projects
+            </button>
+            <button class="tab-btn" onclick="switchTab('videos')" id="videos-tab">
+                <i class="fas fa-video"></i> Videos
+            </button>
+            <button class="tab-btn" onclick="switchTab('hero-photos')" id="hero-photos-tab">
+                <i class="fas fa-images"></i> Hero Photos
+            </button>
+            <button class="tab-btn" onclick="switchTab('resume')" id="resume-tab">
+                <i class="fas fa-file-pdf"></i> Resume
+            </button>
+        </div>
+
+        <!-- Messages Section -->
+        <div id="messages-section" class="tab-content active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="color: var(--text-main); margin: 0; font-size: 24px;">Contact Messages</h2>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn ghost" onclick="exportToCSV()">
+                        <i class="fas fa-download"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+            <div class="stats" id="stats"></div>
+            <div id="messages-container"></div>
+        </div>
+
+        <!-- Projects Section -->
+        <div id="projects-section" class="tab-content">
+            <!-- Add/Edit Project Form -->
+            <div class="project-form">
+                <h2 style="color: var(--text-main); margin: 0 0 24px 0; font-size: 24px;">
+                    <i class="fas fa-plus-circle"></i> <span id="form-title">Add New Project</span>
+                </h2>
+                <form id="project-form">
+                    <input type="hidden" id="project-id">
+                    <div class="form-group">
+                        <label for="title">Project Title *</label>
+                        <input type="text" id="title" required placeholder="Enter project title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" placeholder="Brief description of the project"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectUrl">Project URL *</label>
+                        <input type="url" id="projectUrl" required placeholder="https://github.com/yourproject">
+                    </div>
+                    <div class="form-group">
+                        <label>Project Image <span id="image-required">*</span></label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="image" accept="image/*">
+                            <label for="image" class="file-input-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;">Click to upload image</div>
+                                    <div style="font-size: 13px;">PNG, JPG, GIF, WEBP (Max 10MB)</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div id="imagePreview"
+                            style="display: none; margin-top: 16px; max-width: 300px; border-radius: 8px; overflow: hidden;">
+                            <img id="previewImg" src="" alt="Preview"
+                                style="width: 100%; height: auto; display: block;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn" style="flex: 1;">
+                            <i class="fas fa-save"></i> <span id="submit-btn-text">Save Project</span>
+                        </button>
+                        <button type="button" class="btn ghost" onclick="cancelEdit()" id="cancel-btn"
+                            style="display: none;">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Projects List -->
+            <h2 style="color: var(--text-main); margin: 32px 0 24px 0; font-size: 24px;">
+                <i class="fas fa-list"></i> Your Projects
+            </h2>
+            <div class="projects-grid" id="projects-container">
+                <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <p>Loading projects...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Videos Section -->
+        <div id="videos-section" class="tab-content">
+            <!-- Add/Edit Video Form -->
+            <div class="project-form">
+                <h2 style="color: var(--text-main); margin: 0 0 24px 0; font-size: 24px;">
+                    <i class="fas fa-plus-circle"></i> <span id="video-form-title">Add New Video</span>
+                </h2>
+                <form id="video-form">
+                    <input type="hidden" id="video-id">
+                    <div class="form-group">
+                        <label for="video-url">YouTube URL *</label>
+                        <input type="url" id="video-url" required placeholder="https://www.youtube.com/watch?v=...">
+                        <small style="color: var(--text-muted); font-size: 13px; margin-top: 4px; display: block;">
+                            Paste the full YouTube video URL
+                        </small>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn" style="flex: 1;">
+                            <i class="fas fa-save"></i> <span id="video-submit-btn-text">Save Video</span>
+                        </button>
+                        <button type="button" class="btn ghost" onclick="cancelVideoEdit()" id="video-cancel-btn"
+                            style="display: none;">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Videos List -->
+            <h2 style="color: var(--text-main); margin: 32px 0 24px 0; font-size: 24px;">
+                <i class="fas fa-list"></i> Your Videos
+            </h2>
+            <div class="projects-grid" id="videos-admin-container">
+                <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <p>Loading videos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Photos Section -->
+    <div id="hero-photos-section" class="tab-content">
+        <!-- Add/Edit Hero Photo Form -->
+        <div class="project-form">
+            <h2 style="color: var(--text-main); margin: 0 0 24px 0; font-size: 24px;">
+                <i class="fas fa-plus-circle"></i> <span id="hero-photo-form-title">Add New Hero Photo</span>
+            </h2>
+            <form id="hero-photo-form">
+                <input type="hidden" id="hero-photo-id">
+                <div class="form-group">
+                    <label>Hero Photo Image <span id="hero-image-required">*</span></label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="hero-image" accept="image/*">
+                        <label for="hero-image" class="file-input-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Click to upload image</div>
+                                <div style="font-size: 13px;">PNG, JPG, GIF, WEBP (Max 10MB)</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div id="heroImagePreview"
+                        style="display: none; margin-top: 16px; max-width: 300px; border-radius: 8px; overflow: hidden;">
+                        <img id="heroPreviewImg" src="" alt="Preview"
+                            style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hero-alt">Alt Text (Optional)</label>
+                    <input type="text" id="hero-alt" placeholder="Description for accessibility">
+                </div>
+                <div class="form-group">
+                    <label for="hero-position-x">Horizontal Position: <span id="position-x-value">50</span>%</label>
+                    <input type="range" id="hero-position-x" min="0" max="100" value="50"
+                        style="width: 100%; cursor: pointer;">
+                    <small style="color: var(--text-muted); font-size: 13px; margin-top: 4px; display: block;">
+                        Adjust left-right positioning of the image
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="hero-position-y">Vertical Position: <span id="position-y-value">50</span>%</label>
+                    <input type="range" id="hero-position-y" min="0" max="100" value="50"
+                        style="width: 100%; cursor: pointer;">
+                    <small style="color: var(--text-muted); font-size: 13px; margin-top: 4px; display: block;">
+                        Adjust top-bottom positioning of the image
+                    </small>
+                </div>
+                <div class="form-group" id="hero-position-preview" style="display: none;">
+                    <label>Position Preview</label>
+                    <div
+                        style="width: 100%; max-width: 400px; height: 300px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(10, 15, 31, 0.5);">
+                        <img id="hero-position-preview-img" src="" alt="Preview"
+                            style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;">
+                    </div>
+                    <small style="color: var(--text-muted); font-size: 13px; margin-top: 8px; display: block;">
+                        This preview shows how the image will appear on the main page
+                    </small>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <i class="fas fa-save"></i> <span id="hero-submit-btn-text">Save Photo</span>
+                    </button>
+                    <button type="button" class="btn ghost" onclick="cancelHeroPhotoEdit()" id="hero-cancel-btn"
+                        style="display: none;">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Hero Photos List -->
+        <h2 style="color: var(--text-main); margin: 32px 0 24px 0; font-size: 24px;">
+            <i class="fas fa-list"></i> Your Hero Photos
+        </h2>
+        <div class="projects-grid" id="hero-photos-admin-container">
+            <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                <p>Loading hero photos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Section -->
+    <div id="resume-section" class="tab-content">
+        <!-- Upload Resume Form -->
+        <div class="project-form">
+            <h2 style="color: var(--text-main); margin: 0 0 24px 0; font-size: 24px;">
+                <i class="fas fa-upload"></i> Upload Resume
+            </h2>
+            <form id="resume-form">
+                <div class="form-group">
+                    <label>Resume File (PDF only) *</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="resume-file" accept=".pdf" required>
+                        <label for="resume-file" class="file-input-label">
+                            <i class="fas fa-file-pdf"></i>
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Click to upload PDF</div>
+                                <div style="font-size: 13px;">PDF only (Max 10MB)</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div id="resumeFilePreview"
+                        style="display: none; margin-top: 16px; padding: 12px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                        <i class="fas fa-file-pdf" style="color: var(--accent); margin-right: 8px;"></i>
+                        <span id="resumeFileName" style="color: var(--text-main);"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">
+                    <i class="fas fa-upload"></i> Upload Resume
+                </button>
+            </form>
+        </div>
+
+        <!-- Current Resume -->
+        <h2 style="color: var(--text-main); margin: 32px 0 24px 0; font-size: 24px;">
+            <i class="fas fa-file"></i> Current Resume
+        </h2>
+        <div id="current-resume-container">
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal"
+        style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 1000; justify-content: center; align-items: center;">
+        <div
+            style="background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); width: 100%; max-width: 400px; text-align: center;">
+            <i class="fas fa-lock" style="font-size: 48px; color: var(--accent); margin-bottom: 24px;"></i>
+            <h2 style="color: var(--text-main); margin: 0 0 24px 0;">Admin Login</h2>
+            <form id="login-form">
+                <input type="password" id="admin-password" placeholder="Enter Password" required
+                    style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; margin-bottom: 24px; font-size: 16px;">
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+            <p id="login-error" style="color: #ef4444; margin: 16px 0 0 0; display: none;">Incorrect password</p>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

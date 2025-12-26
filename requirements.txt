@@ -1,0 +1,13 @@
+# System Requirements
+node>=18.20.0
+
+# Backend Dependencies (npm)
+@supabase/supabase-js^2.89.0
+body-parser^1.20.2
+cors^2.8.5
+dotenv^17.2.3
+express^4.19.2
+multer^2.0.2
+
+# Frontend Dependencies (CDN)
+font-awesome@6.5.1

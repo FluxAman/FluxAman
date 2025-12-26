@@ -1,8 +1,11 @@
-# Ignore everything
-*
+node_modules
+.env
+.DS_Store
 
-# Whitelist
-!index.html
-!style.css
-!script.js
-!.gitignore
+# Sensitive Data (Hidden)
+resume.json
+videos.json
+projects.json
+hero-photos.json
+messages.json
+uploads/
