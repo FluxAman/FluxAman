@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1766659425165,
+    "image": "/uploads/hero/1766659425160-535391618.jpg",
+    "alt": "Hero Photo",
+    "createdAt": "2025-12-25T10:43:45.165Z",
+    "order": 0,
+    "positionX": "49",
+    "positionY": "27"
+  },
+  {
+    "id": 1766659441957,
+    "image": "/uploads/hero/1766659441956-853519995.png",
+    "alt": "Hero Photo",
+    "createdAt": "2025-12-25T10:44:01.957Z",
+    "order": 0,
+    "positionX": "50",
+    "positionY": "15"
+  },
+  {
+    "id": 1766659456107,
+    "image": "/uploads/hero/1766659456092-697026239.png",
+    "alt": "Hero Photo",
+    "createdAt": "2025-12-25T10:44:16.107Z",
+    "order": 0,
+    "positionX": "50",
+    "positionY": "19"
+  }
+]

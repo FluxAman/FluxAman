@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FluxAman</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">Aman Kumar</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Skills</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>Aman kumar</h1>
+        <p>I’m a full-stack developer building scalable systems end to end.
+          I focus on clean architecture, efficient code, and solving real product problems </p>
+        <div class="hero-actions">
+          <button class="btn" id="resume-btn" onclick="downloadResume()">
+            <i class="fas fa-file-pdf"></i> Resume
+          </button>
+          <button class="btn ghost">View Work</button>
+        </div>
+
+        <div class="hero-socials">
+          <a href="https://x.com/FluxAman" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://github.com/FluxAman" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-photo-container" id="hero-photos">
+          <!-- Photos will be loaded dynamically -->
+          <img src="01.png" alt="Hero Photo" class="active">
+        </div>
+        <div class="hero-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">My <span>Skills</span></h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <i class="fas fa-code" style="font-size: 36px; color: var(--accent); margin-bottom: 16px;"></i>
+          <h3>Frontend Development</h3>
+          <p>Clean, responsive, and accessible interfaces with modern frameworks.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-server" style="font-size: 36px; color: var(--accent-2); margin-bottom: 16px;"></i>
+          <h3>Backend Development</h3>
+          <p>Secure APIs and scalable server logic with best practices.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-palette" style="font-size: 36px; color: var(--accent-3); margin-bottom: 16px;"></i>
+          <h3>UI / UX Design</h3>
+          <p>User-focused layouts with clarity, flow, and aesthetic appeal.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-tasks" style="font-size: 36px; color: var(--accent); margin-bottom: 16px;"></i>
+          <h3>Project Management</h3>
+          <p>Strategic planning, efficient execution, and timely delivery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container stats-grid">
+      <div>
+        <h3>2+</h3>
+        <p>Years Experience</p>
+      </div>
+      <div>
+        <h3>20+</h3>
+        <p>Projects</p>
+      </div>
+      <div>
+        <h3>15+</h3>
+        <p>Happy Clients</p>
+      </div>
+      <div>
+        <h3>5+</h3>
+        <p>Awards</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">My <span>Projects</span></h2>
+
+      <div class="card-grid" id="projects-container">
+        <!-- Projects will be loaded dynamically -->
+        <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+          <p>Loading projects...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUTUBE VIDEOS -->
+  <section id="videos"
+    style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(129, 140, 248, 0.05)); border-top: 1px solid rgba(56, 189, 248, 0.1); border-bottom: 1px solid rgba(56, 189, 248, 0.1);">
+    <div class="container">
+      <h2 class="section-title">My <span>YouTube</span> Videos</h2>
+
+      <div class="videos-scroll-container">
+        <div class="videos-horizontal" id="videos-container">
+          <!-- Videos will be loaded dynamically -->
+          <div style="text-align: center; padding: 60px; color: var(--text-muted); width: 100%;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+            <p>Loading videos...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="video-modal">
+    <div class="video-modal-overlay"></div>
+    <div class="video-modal-content">
+      <span class="video-modal-close">&times;</span>
+      <div class="video-modal-player">
+        <iframe id="video-modal-iframe" src="" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact <span>Me</span></h2>
+
+      <form class="contact-form" id="local-storage-form">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+
+      <div id="local-status"
+        style="display: none; margin-top: 24px; padding: 32px; background: rgba(56, 189, 248, 0.1); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); text-align: center;">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Load Projects Dynamically
+    async function loadProjects() {
+      const container = document.getElementById('projects-container');
+
+      try {
+        const response = await fetch('/api/projects');
+        const projects = await response.json();
+
+        if (projects.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 60px; color: var(--text-muted); grid-column: 1 / -1;">
+              <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+              <h3 style="margin: 0 0 8px 0;">No Projects Yet</h3>
+              <p style="margin: 0;">Projects will appear here once added.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = projects.map(project => `
+          <div class="card project" 
+               style="background-image: url('${project.image || '01.png'}'); cursor: pointer;"
+               onclick="window.open('${project.projectUrl}', '_blank')"
+               title="Click to view project">
+            <div class="project-overlay">
+              <i class="fas fa-external-link-alt" style="font-size: 32px; margin-bottom: 12px;"></i>
+              <p style="margin: 0; font-weight: 600;">View Project</p>
+            </div>
+            <div class="project-info">
+              <h3 style="position: relative; z-index: 1; margin: 0 0 8px 0;">${project.title}</h3>
+              <p style="position: relative; z-index: 1; margin: 0; font-size: 14px; opacity: 0.9;">${project.description || ''}</p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        container.innerHTML = `
+          <div style="text-align: center; padding: 60px; color: #ef4444; grid-column: 1 / -1;">
+            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+            <h3 style="margin: 0 0 8px 0;">Failed to Load Projects</h3>
+            <p style="margin: 0;">Please try refreshing the page.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Load Videos Dynamically
+    async function loadVideos() {
+      const container = document.getElementById('videos-container');
+
+      try {
+        const response = await fetch('/api/videos');
+        const videos = await response.json();
+
+        if (videos.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 60px; color: var(--text-muted); width: 100%;">
+              <i class="fas fa-video" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+              <h3 style="margin: 0 0 8px 0;">No Videos Yet</h3>
+              <p style="margin: 0;">YouTube videos will appear here once added.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = videos.map(video => `
+          <div class="video-card" onclick="openVideoModal('${video.videoId}')" title="${video.title}">
+            <div class="video-thumbnail" style="background-image: url('${video.thumbnail}');">
+              <div class="video-play-icon">
+                <i class="fab fa-youtube"></i>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error loading videos:', error);
+        container.innerHTML = `
+          <div style="text-align: center; padding: 60px; color: #ef4444; width: 100%;">
+            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+            <h3 style="margin: 0 0 8px 0;">Failed to Load Videos</h3>
+            <p style="margin: 0;">Please try refreshing the page.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Video Modal Functions
+    function openVideoModal(videoId) {
+      const modal = document.getElementById('video-modal');
+      const iframe = document.getElementById('video-modal-iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('video-modal');
+      const iframe = document.getElementById('video-modal-iframe');
+      iframe.src = '';
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on click
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('video-modal');
+      const closeBtn = document.querySelector('.video-modal-close');
+      const overlay = document.querySelector('.video-modal-overlay');
+
+      closeBtn.onclick = closeVideoModal;
+      overlay.onclick = closeVideoModal;
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+          closeVideoModal();
+        }
+      });
+    });
+
+    // Load projects and videos when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProjects();
+      loadVideos();
+      loadHeroPhotos();
+    });
+
+    // Load Hero Photos Dynamically
+    let heroPhotosData = [];
+    let currentPhotoIndex = 0;
+    let photoInterval = null;
+
+    async function loadHeroPhotos() {
+      try {
+        const response = await fetch('/api/hero-photos');
+        const photos = await response.json();
+
+        if (photos.length > 0) {
+          heroPhotosData = photos;
+          const container = document.getElementById('hero-photos');
+
+          // Clear existing content
+          container.innerHTML = '';
+
+          // Add all photos
+          photos.forEach((photo, index) => {
+            const img = document.createElement('img');
+            img.src = photo.image;
+            img.alt = photo.alt || 'Hero Photo';
+
+            // Apply position styling
+            const posX = photo.positionX || 50;
+            const posY = photo.positionY || 50;
+            img.style.objectPosition = `${posX}% ${posY}%`;
+
+            if (index === 0) {
+              img.classList.add('active');
+            }
+            container.appendChild(img);
+          });
+
+          // Start carousel if more than one photo
+          if (photos.length > 1) {
+            startPhotoCarousel();
+          }
+        }
+      } catch (error) {
+        console.error('Error loading hero photos:', error);
+        // Keep default image if API fails
+      }
+    }
+
+    function startPhotoCarousel() {
+      // Clear any existing interval
+      if (photoInterval) {
+        clearInterval(photoInterval);
+      }
+
+      // Rotate photos every 2 seconds
+      photoInterval = setInterval(() => {
+        const container = document.getElementById('hero-photos');
+        const images = container.querySelectorAll('img');
+
+        if (images.length === 0) return;
+
+        // Remove active class from current image
+        images[currentPhotoIndex].classList.remove('active');
+
+        // Move to next photo
+        currentPhotoIndex = (currentPhotoIndex + 1) % images.length;
+
+        // Add active class to new image
+        images[currentPhotoIndex].classList.add('active');
+      }, 2000); // 2 seconds
+    }
+
+    const form = document.getElementById('local-storage-form');
+    const status = document.getElementById('local-status');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message')
+        };
+
+        try {
+          const response = await fetch('/api/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          if (response.ok) {
+            // Show success message
+            status.style.display = 'block';
+            status.innerHTML = `
+                <i class="fas fa-check-circle" style="color: var(--accent); font-size: 32px; margin-bottom: 12px; display: block;"></i>
+                <h3 style="color: var(--accent); margin: 0 0 8px 0;">Message Sent!</h3>
+                <p style="color: var(--text-muted); margin: 0;">Thank you for reaching out. I'll get back to you soon!</p>
+                `;
+            form.reset();
+            setTimeout(() => {
+              status.style.display = 'none';
+            }, 5000);
+          } else {
+            throw new Error('Failed to send message');
+          }
+        } catch (error) {
+          status.style.display = 'block';
+          status.innerHTML = `
+            <i class="fas fa-exclamation-circle" style="color: #ef4444; font-size: 32px; margin-bottom: 12px; display: block;"></i>
+            <h3 style="color: #ef4444; margin: 0 0 8px 0;">Error!</h3>
+            <p style="color: var(--text-muted); margin: 0;">Something went wrong. Please try again later.</p>
+            `;
+        }
+      });
+    }
+
+    // Download Resume Function
+    async function downloadResume() {
+      try {
+        const response = await fetch('/api/resume');
+        const data = await response.json();
+
+        if (data.success && data.data && data.data.path) {
+          // Create a temporary link and trigger download
+          const link = document.createElement('a');
+          link.href = data.data.path;
+          link.download = data.data.filename || 'resume.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          alert('Resume not available at the moment. Please check back later.');
+        }
+      } catch (error) {
+        console.error('Error downloading resume:', error);
+        alert('Failed to download resume. Please try again later.');
+      }
+    }
+  </script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div style="display: flex; gap: 24px; justify-content: center; margin-bottom: 20px;">
+        <a href="#" style="color: var(--text-muted); font-size: 24px; transition: color 0.3s ease;"
+          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="#" style="color: var(--text-muted); font-size: 24px; transition: color 0.3s ease;"
+          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" style="color: var(--text-muted); font-size: 24px; transition: color 0.3s ease;"
+          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" style="color: var(--text-muted); font-size: 24px; transition: color 0.3s ease;"
+          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+          <i class="fab fa-dribbble"></i>
+        </a>
+      </div>
+      <p>© 2024 Powered by FluxAman | Crafted with passion</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
