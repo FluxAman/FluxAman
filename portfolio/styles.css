@@ -291,6 +291,13 @@ a {
     margin-top: 0.1rem;
 }
 
+.edu-cgpa {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    color: var(--link-color);
+}
+
 .edu-date {
     font-size: 0.85rem;
     white-space: nowrap;
