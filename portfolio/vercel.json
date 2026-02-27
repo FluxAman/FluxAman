@@ -1,9 +1,11 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "cleanUrls": false,
+  "public": true,
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
         {
           "key": "Cache-Control",
